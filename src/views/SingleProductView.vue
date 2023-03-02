@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="single-product">
+        <div class="single-product" v-if="product">
             <h1>{{ product.prodName }}</h1>
             <h2>{{ product.price }}</h2>
             <p>{{ product.prodDescription }}</p>
@@ -12,19 +12,21 @@ export default {
 
     computed: {
         product() {
-            const productId = this.$route.params.id
-            const products = this.$store.state.product
-            if (products.length === 0) {
-                return null
-            }
-             return products.find(product => product.id === productId)
+            // const id = this.$route.params.id
+            console.log(this.$store.state.product);
+            return this.$store.state.product || {};
+            // return this.$store.state.product;
         }
     },
+    // created() {
+
+    // },
     mounted() {
-        this.$store.dispatch('fetchProduct', this.id);
+        const id = this.$route.params.id
+        if(!this.product) {
+            this.$store.dispatch('fetchProduct',id);
+        }
     }
 }
 </script>
-<style>
-    
-</style>
+<style></style>

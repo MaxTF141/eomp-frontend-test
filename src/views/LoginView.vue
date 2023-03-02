@@ -6,12 +6,12 @@
                 <h1>LOGIN</h1>
             </div>
             <div class="main">
-                <form action="">
+                <form @submit.prevent="loginCredentials">
                     <i class="bi bi-person-fill"></i>
-                    <input type="text" placeholder="username" name=""><br>
+                    <input type="text" placeholder="username" v-model="login.emailAdd" required><br>
                     <i class="bi bi-unlock-fill"></i>
-                    <input type="password" placeholder="password"  name=""><br>
-                    <button>login</button>
+                    <input type="password" placeholder="password" v-model="login.userPass" required><br>
+                    <button type="submit">login</button>
                 </form>
             </div>
             <div class="footer">
@@ -25,7 +25,21 @@
 </template>
 <script>
 export default {
-    
+    data() {
+        return {
+            login: {
+                emailAdd: '',
+                userPass: ''
+            }
+        }
+    },
+    methods: {
+        async loginCredentials() {
+            await this.$store.dispatch('loginUser', this.login);
+            this.login.emailAdd = '',
+            this.login.userPass = ''
+        }
+    }
 }
 </script>
 <style scoped>

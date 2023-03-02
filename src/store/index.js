@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+import Vue from 'vue';
 
 const DeadTales = 'https://deadmans-tales.onrender.com/'
 
@@ -8,7 +9,7 @@ export default createStore({
     users: null,
     user: null,
     products: null,
-    product: null,
+    product: {},
     showSpinner: true
   },
   getters: {
@@ -24,7 +25,8 @@ export default createStore({
       state.products = products
     },
     setProduct(state, product) {
-      state.product = product
+      console.log(product);
+      Vue.set(state, "product", product);
     },
     setSpinner(state, values) {
       state.showSpinner = values
@@ -34,7 +36,7 @@ export default createStore({
     }
   },
   actions: {
-    async login(context, payload) {
+    async loginUser(context, payload) {
       const res = await axios.post(`${DeadTales}login`, payload);
       const { result, err } = await res.data;
       if (result) {
@@ -43,7 +45,7 @@ export default createStore({
         context.commit('setMessage', err)
       }
     },
-    async register(context, payload) {
+    async registerUser(context, payload) {
       const res = await axios.post(`${DeadTales}register`, payload)
       const { msg, err } = await res.data;
       if (msg) {
@@ -73,12 +75,12 @@ export default createStore({
     async fetchProducts(context) {
       const res = await axios.get(`${DeadTales}products`);
       console.log(await res.data)
-      context.commit('setProducts', res.data)
+      context.commit('setProducts',await res.data)
     },
-    async fetchProduct(context, id) {
+    async fetchProduct({ commit }, id) {
       const res = await axios.get(`${DeadTales}product/${id}`);
-      console.log(await res.data)
-      context.commit('setProduct', res.data)
+      console.log(Object.assign({}, res.data))
+      commit('setProduct', res.data)
     }
   },
   modules: {

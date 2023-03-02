@@ -20,54 +20,44 @@
                     <option value="price">Price</option>
                 </select>
             </div>
-             <div class="search">
-                 <label class="filter-label" for="search">Search:</label>
-                 <input class="filter-input" id="search" v-model="searchQuery" type="text" placeholder="Search">
-             </div>
+            <div class="search">
+                <label class="filter-label" for="search">Search:</label>
+                <input class="filter-input" id="search" v-model="searchQuery" type="text" placeholder="Search">
+            </div>
         </div>
 
         <div class="container">
-             <div class="row">
+            <div class="row">
                 <div class="product-item g-5" v-for="product in products" :key="product.id" style="width: 18rem;">
                     <img :src="product.imgURL" class="card-img-top">
                     <div class="card-body">
-                      <h5 class="card-title">{{product.prodName}}</h5>
-                      <div class="card-text">{{product.category}}</div>
-                      <div class="card-text">{{product.prodDescription}}</div>
-                      <div class="card-text">R{{product.price}}</div>
-                      <router-link class="btn btn primary" :to="{name: 'product', params:{id: product.id}}">View more</router-link>
+                        <h5 class="card-title">{{ product.prodName }}</h5>
+                        <div class="card-text">{{ product.category }}</div>
+                        <div class="card-text">R{{ product.price }}</div>
+                        <router-link class="btn btn-primary" :to="{ name: 'product', params: { id: product.id } }">View
+                            more</router-link>
                     </div>
-                  </div>    
+                </div>
             </div>
         </div>
-       
-    
+
+
     </body>
 </template>
 <script>
-import {useStore} from 'vuex';
-import {computed} from '@vue/runtime-core';
+// import { useStore } from 'vuex';
+// import {computed} from '@vue/runtime-core';
 
 export default {
-    setup() {
-        const store = useStore();
-        store.dispatch("fetchProducts");
-        let products = computed(() => store.state.products)
-        return{
-            products,
-        },
-        { 
-            sortBy: 'name',
-            filterBy: 'all',
-            searchQuery: '',
-            categories: ['Marvel', 'DC']
-        }
-    },
     computed: {
         products() {
             return this.$store.state.products;
         }
     },
+    mounted() {
+            this.$store.dispatch('fetchProducts');
+        },
+
     methods: {
         sortProducts() {
             let sortKey = this.sortBy;
@@ -92,17 +82,16 @@ export default {
             }
         }
     }
-    
+
 }
 </script>
 
 <style scoped>
-
 body {
     padding-top: 150px;
 }
 
-header h2{
+header h2 {
     text-align: center;
     font-size: 100px;
     font-family: 'Mynerve', cursive;
@@ -113,7 +102,7 @@ header h2{
     justify-content: space-evenly;
 }
 
-#filter{
+#filter {
     border-radius: 25px;
     border-color: white;
     background-color: black;
@@ -130,7 +119,7 @@ header h2{
 
 }
 
-.product-item{
+.product-item {
     text-align: center;
     font-family: 'Mynerve', cursive;
     font-weight: bolder;
@@ -166,10 +155,10 @@ input[type=text]:focus {
 input[type=text]:focus {
     width: 50%;
 }
+
 .navigators {
     align-items: center;
     justify-content: space-between;
     margin: auto;
 }
-    
 </style>
