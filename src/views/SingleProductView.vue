@@ -9,23 +9,14 @@
 </template>
 <script>
 export default {
-
+    props: ['id'],
     computed: {
         product() {
-            // const id = this.$route.params.id
-            console.log(this.$store.state.product);
-            return this.$store.state.product || {};
-            // return this.$store.state.product;
+                return this.$store.state.product;
         }
     },
-    // created() {
-
-    // },
     mounted() {
-        const id = this.$route.params.id
-        if(!this.product) {
-            this.$store.dispatch('fetchProduct',id);
-        }
+        this.$store.dispatch("fetchProduct", this.id);
     }
 }
 </script>

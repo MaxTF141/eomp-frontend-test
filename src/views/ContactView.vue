@@ -51,7 +51,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12 mt-4">
-                                            <input type="submit" class="btn btn-primary btn-send pt-2 btn-block"
+                                            <input type="submit" class="btn btn-danger btn-send pt-2 btn-block"
                                             value="Send Message">
                                         </div>
                                     </div>

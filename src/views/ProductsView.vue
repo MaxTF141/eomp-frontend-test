@@ -34,7 +34,7 @@
                         <h5 class="card-title">{{ product.prodName }}</h5>
                         <div class="card-text">{{ product.category }}</div>
                         <div class="card-text">R{{ product.price }}</div>
-                        <router-link class="btn btn-primary" :to="{ name: 'product', params: { id: product.id } }">View
+                        <router-link class="btn btn-danger" :to="{ name: 'product', params: { id: product.id } }">View
                             more</router-link>
                     </div>
                 </div>

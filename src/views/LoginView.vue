@@ -1,29 +1,29 @@
 <template>
-<body>        
-    <div class="login">
-        <div class="container">
-            <div class="header">
-                <h1>LOGIN</h1>
+    <body>
+        <div class="login">
+            <div class="container">
+                <div class="header">
+                    <h1>LOGIN</h1>
+                </div>
+                <div class="main">
+                    <form @submit.prevent="loginCredentials">
+                        <i class="bi bi-person-fill"></i>
+                        <input type="text" placeholder="username" v-model="login.emailAdd" required><br>
+                        <i class="bi bi-unlock-fill"></i>
+                        <input type="password" placeholder="password" v-model="login.userPass" required><br>
+                        <button type="submit">login</button>
+                    </form>
+                </div>
+                <div class="footer">
+                    <a href="">Forgot Your Password?</a>
+                    <a href="/register">Don't Have An Account? Register</a>
+                </div>
             </div>
-            <div class="main">
-                <form @submit.prevent="loginCredentials">
-                    <i class="bi bi-person-fill"></i>
-                    <input type="text" placeholder="username" v-model="login.emailAdd" required><br>
-                    <i class="bi bi-unlock-fill"></i>
-                    <input type="password" placeholder="password" v-model="login.userPass" required><br>
-                    <button type="submit">login</button>
-                </form>
-            </div>
-            <div class="footer">
-                <a href="">Forgot Your Password?</a>
-                <a href="/register">Don't Have An Account? Register</a>
-            </div>
-        </div>  
-    </div>
-</body>
-
+        </div>
+    </body>
 </template>
 <script>
+import { useCookies } from "vue3-cookies";
 export default {
     data() {
         return {
@@ -37,19 +37,30 @@ export default {
         async loginCredentials() {
             await this.$store.dispatch('loginUser', this.login);
             this.login.emailAdd = '',
-            this.login.userPass = ''
+                this.login.userPass = ''
         }
+    },
+    setup() {
+        const { cookies } = useCookies();
+        return { cookies }
+    },
+
+    mounted() {
+        let my_cookie_value = this.cookies.get("legit");
+        console.log(my_cookie_value);
+        return { my_cookie_value };
     }
 }
+
+
 </script>
 <style scoped>
-
 body {
     background-image: url(https://i.postimg.cc/1X41k4K0/Deadpool-Black-Background-Katana-Marvel-Comics-HD-Wallpaper-1920x1200.jpg);
     min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
-    overflow: hidden;  
+    overflow: hidden;
 }
 
 
@@ -62,14 +73,14 @@ body {
     border-radius: 25px;
     margin-bottom: 50px;
     --bs-gutter-x: 0rem;
-    margin-top: 125px;  
+    margin-top: 125px;
 }
 
 .header {
     height: 100px;
     background-color: crimson;
-    border-radius: 25px 25px 50px 0; 
-    text-align: center; 
+    border-radius: 25px 25px 50px 0;
+    text-align: center;
 }
 
 .header h1 {
@@ -120,7 +131,7 @@ body {
     transition: .2s;
 }
 
-.main button:hover{
+.main button:hover {
     width: 135px;
 }
 
@@ -135,10 +146,10 @@ i {
     margin-top: 50px;
     height: 90px;
     background-color: crimson;
-    border-radius: 50px 0px 25px 25px ;
+    border-radius: 50px 0px 25px 25px;
 }
 
-.footer a{
+.footer a {
     display: block;
     font-size: 16px;
     text-align: center;

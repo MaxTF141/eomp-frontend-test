@@ -1,8 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-import Vue from 'vue';
 
-const DeadTales = 'https://deadmans-tales.onrender.com/'
+const DeadTales = 'http://localhost:2222/'
 
 export default createStore({
   state: {
@@ -26,7 +25,7 @@ export default createStore({
     },
     setProduct(state, product) {
       console.log(product);
-      Vue.set(state, "product", product);
+      state.product = product
     },
     setSpinner(state, values) {
       state.showSpinner = values
@@ -79,8 +78,8 @@ export default createStore({
     },
     async fetchProduct({ commit }, id) {
       const res = await axios.get(`${DeadTales}product/${id}`);
-      console.log(Object.assign({}, res.data))
-      commit('setProduct', res.data)
+      console.log(await res.data)
+      commit('setProduct', await res.data)
     }
   },
   modules: {
